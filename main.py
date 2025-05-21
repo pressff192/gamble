@@ -11,7 +11,6 @@ START_BALANCE = 100
 BET = 10
 SPIN_DELAY = 100  # мс між змінами символів під час "анімації"
 
-
 class SlotMachineApp:
     def __init__(self, root):
         self.root = root
@@ -73,7 +72,6 @@ class SlotMachineApp:
 
     def update_balance(self):
         self.balance_label.config(text=f"💰 Баланс: {self.balance}")
-
 
 # Запуск програми
 root = tk.Tk()
