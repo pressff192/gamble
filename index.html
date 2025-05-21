@@ -53,6 +53,11 @@
             border-radius: 5px;
             width: 120px;
         }
+        .message {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #ffcc00;
+        }
     </style>
 </head>
 <body>
@@ -77,11 +82,15 @@
 <!-- Кнопка для кручення -->
 <button id="spinButton" onclick="spin()">Крутити 🎲</button>
 
+<!-- Місце для повідомлень -->
+<div class="message" id="gameMessage"></div>
+
 <script>
     const symbols = ["🍒", "🍋", "🔔", "💎", "7️⃣", "⭐"];
     let balance = 100.00; // Початковий баланс в доларах
     const spinButton = document.getElementById("spinButton");
     const betInput = document.getElementById("betInput");
+    const gameMessage = document.getElementById("gameMessage");
 
     function randomSymbol() {
         return symbols[Math.floor(Math.random() * symbols.length)];
@@ -92,7 +101,7 @@
     }
 
     function showMessage(message) {
-        alert(message);
+        gameMessage.textContent = message; // Виводимо повідомлення на екран
     }
 
     function spin() {
@@ -107,6 +116,7 @@
         balance -= bet;
         updateBalance();
         spinButton.disabled = true;
+        gameMessage.textContent = ""; // Очищаємо повідомлення перед початком гри
 
         let steps = 10;
         let interval = setInterval(() => {
