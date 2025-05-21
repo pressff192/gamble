@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>🎰 Слоти Казино</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .balance {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .reels {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .reel {
+            background-color: #333;
+            color: white;
+            font-size: 50px;
+            padding: 20px;
+            margin: 0 10px;
+            border-radius: 10px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 18px;
+            padding: 10px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎰 Слоти Казино</h1>
+<div class="balance" id="balance">💰 Баланс: 100</div>
+<div class="reels">
+    <div class="reel" id="reel1">❔</div>
+    <div class="reel" id="reel2">❔</div>
+    <div class="reel" id="reel3">❔</div>
+</div>
+<button id="spinButton" onclick="spin()">Крутити 🎲</button>
+
+<script>
+    const symbols = ["🍒", "🍋", "🔔", "💎", "7️⃣", "⭐"];
+    let balance = 100;
+    const bet = 10;
+    const spinButton = document.getElementById("spinButton");
+
+    function randomSymbol() {
+        return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+
+    function updateBalance() {
+        document.getElementById("balance").textContent = "💰 Баланс: " + balance;
+    }
+
+    function showMessage(message) {
+        alert(message);
+    }
+
+    function spin() {
+        if (balance < bet) {
+            showMessage("У вас недостатньо монет для нової ставки.");
+            return;
+        }
+
+        balance -= bet;
+        updateBalance();
+        spinButton.disabled = true;
+
+        let steps = 10;
+        let interval = setInterval(() => {
+            document.getElementById("reel1").textContent = randomSymbol();
+            document.getElementById("reel2").textContent = randomSymbol();
+            document.getElementById("reel3").textContent = randomSymbol();
+            steps--;
+            if (steps <= 0) {
+                clearInterval(interval);
+                finishSpin();
+            }
+        }, 100);
+    }
+
+    function finishSpin() {
+        const finalSymbols = [randomSymbol(), randomSymbol(), randomSymbol()];
+        document.getElementById("reel1").textContent = finalSymbols[0];
+        document.getElementById("reel2").textContent = finalSymbols[1];
+        document.getElementById("reel3").textContent = finalSymbols[2];
+
+        if (finalSymbols[0] === finalSymbols[1] && finalSymbols[1] === finalSymbols[2]) {
+            const winnings = bet * 10;
+            balance += winnings;
+            showMessage("🎉 Ви виграли " + winnings + " монет!");
+        } else {
+            showMessage("😢 Програш. Спробуйте ще раз!");
+        }
+
+        updateBalance();
+        spinButton.disabled = false;
+    }
+</script>
+
+</body>
+</html>
