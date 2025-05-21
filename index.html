@@ -138,9 +138,16 @@
         document.getElementById("reel3").textContent = finalSymbols[2];
 
         if (finalSymbols[0] === finalSymbols[1] && finalSymbols[1] === finalSymbols[2]) {
-            const winnings = bet * 10;
-            balance += winnings;
-            showMessage("🎉 Ви виграли " + winnings.toFixed(2) + " монет!");
+            // Перевірка на джекпот (символи "7️⃣" на всіх барабанах)
+            if (finalSymbols[0] === "7️⃣") {
+                const winnings = bet * 100000;
+                balance += winnings;
+                showMessage("🎉 Ви виграли Джекпот! " + winnings.toFixed(2) + " монет!");
+            } else {
+                const winnings = bet * 100;
+                balance += winnings;
+                showMessage("🎉 Ви виграли " + winnings.toFixed(2) + " монет!");
+            }
         } else {
             showMessage("😢 Програш. Спробуйте ще раз!");
         }
