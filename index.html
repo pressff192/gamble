@@ -12,7 +12,7 @@
             margin: 0;
             padding: 20px;
         }
-        .balance {
+        .balance, .bet {
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -47,29 +47,35 @@
             background-color: #555;
         }
         .bet-input {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 16px;
             padding: 10px;
             border-radius: 5px;
-            width: 100px;
+            width: 120px;
         }
     </style>
 </head>
 <body>
 
 <h1>🎰 Слоти Казино</h1>
+
+<!-- Поле для ставки -->
+<div class="bet">
+    <label for="betInput">Ставка: </label>
+    <input type="number" id="betInput" class="bet-input" value="0.10" min="0.10" step="0.01" />
+</div>
+
+<!-- Баланс користувача -->
 <div class="balance" id="balance">💰 Баланс: $10.00</div>
+
 <div class="reels">
     <div class="reel" id="reel1">❔</div>
     <div class="reel" id="reel2">❔</div>
     <div class="reel" id="reel3">❔</div>
 </div>
 
-<!-- Поле для введення ставки -->
-<div>
-    <input type="number" id="betInput" class="bet-input" value="0.10" min="0.10" step="0.01" />
-    <button id="spinButton" onclick="spin()">Крутити 🎲</button>
-</div>
+<!-- Кнопка для кручення -->
+<button id="spinButton" onclick="spin()">Крутити 🎲</button>
 
 <script>
     const symbols = ["🍒", "🍋", "🔔", "💎", "7️⃣", "⭐"];
@@ -92,6 +98,7 @@
     function spin() {
         const bet = parseFloat(betInput.value);
 
+        // Перевірка на валідність ставки
         if (isNaN(bet) || bet <= 0 || bet > balance) {
             showMessage("Будь ласка, введіть правильну ставку (менше або дорівнює вашому балансу).");
             return;
